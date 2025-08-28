@@ -3,12 +3,16 @@ const app = express();
 const mongoose = require('mongoose');
 const MyBook = require("./models/books");
 const cors=require('cors')
+require('dotenv').config()
+const mongo=process.env.Mongo_URI
+const PORT=process.env.PORT||5000
+
 
 
 app.use(express.json());
 app.use(cors())
 
-mongoose.connect('mongodb://127.0.0.1:27017/newBook')
+mongoose.connect(mongo)
   .then(() => console.log("database is connected"))
   .catch((err) => console.log(`error occurred ${err}`));
 
@@ -77,6 +81,6 @@ app.delete('/books/:id',async(req,res)=>{
   }
 })
 
-app.listen(5000, () => {
-  console.log("Listening on server port 5000"); 
+app.listen(PORT, () => {
+  console.log(`Listening on server ${PORT}`); 
 });
